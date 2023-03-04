@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table (name="vehicles")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Vehicle {
+public abstract   class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -13,15 +13,24 @@ public abstract class Vehicle {
     private String licensePlate;
     private String brand;
 
-    @OneToOne (mappedBy = "vehicle")
-    private Person person;
 
-    @ManyToOne
-    private ParkingSlots parkingSlots;
+
+    @OneToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
+    @OneToOne(mappedBy = "vehicle")
+    private ParkingSlot parkingSlot;
 
     public Vehicle() {
 
     }
+
+    public Vehicle(String licensePlate, String brand) {
+        this.licensePlate = licensePlate;
+        this.brand = brand;
+    }
+
 
 
     public Integer getId() {
@@ -48,11 +57,29 @@ public abstract class Vehicle {
         this.brand = brand;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public ParkingSlot getParkingSlot() {
+        return parkingSlot;
+    }
+
+    public void setParkingSlots(ParkingSlot parkingSlot) {
+        this.parkingSlot = parkingSlot;
+    }
+
     public void print() {
         System.out.println("Vehicle{" +
                 "id=" + id +
                 ", licensePlate='" + licensePlate  + '\'' +
-                ", brand'" + brand + '\''+
+                ", brand= '" + brand + '\''+
+                ", parkingSlot= '" + parkingSlot + '\'' +
+                ", teacher= '" + teacher.getName() +
                 '}');
     }
 }
