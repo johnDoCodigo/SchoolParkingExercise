@@ -2,6 +2,7 @@ package mindswap.schoolParking;
 
 
 import javax.persistence.*;
+import java.util.LinkedList;
 
 
 @Entity
@@ -14,6 +15,8 @@ public class ParkingSlot {
     @OneToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+
+
 
 
     public ParkingSlot() {
@@ -31,9 +34,16 @@ public class ParkingSlot {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void parkVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+        vehicle.setParkingSlot(this);
     }
+
+    public void removeVehicle() {
+        this.vehicle = null;
+    }
+
+
 }
 
 

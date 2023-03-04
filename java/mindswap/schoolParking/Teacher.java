@@ -21,9 +21,8 @@ public class Teacher extends Person {
         super(name);
     }
 
-    public Teacher(String name, int age, Vehicle vehicle) {
+    public Teacher(String name, int age) {
         super(name, age);
-        this.vehicle = vehicle;
     }
 
     public Vehicle getVehicle() {

@@ -7,9 +7,7 @@ import javax.persistence.Table;
 @Table(name = "bikes")
 public class Bike extends Vehicle{
 
-    public Bike(String licensePlate, String brand) {
-        super(licensePlate, brand);
+    public Bike(String licensePlate, String brand, Teacher teacher) {
+        super(licensePlate, brand, teacher);
     }
-
-
 }

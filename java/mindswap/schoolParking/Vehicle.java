@@ -20,15 +20,17 @@ public abstract   class Vehicle {
     private Teacher teacher;
 
     @OneToOne(mappedBy = "vehicle")
+    @JoinColumn(name = "parkingSlot_id")
     private ParkingSlot parkingSlot;
 
     public Vehicle() {
 
     }
 
-    public Vehicle(String licensePlate, String brand) {
+    public Vehicle(String licensePlate, String brand,Teacher teacher) {
         this.licensePlate = licensePlate;
         this.brand = brand;
+        this.teacher = teacher;
     }
 
 
@@ -69,7 +71,7 @@ public abstract   class Vehicle {
         return parkingSlot;
     }
 
-    public void setParkingSlots(ParkingSlot parkingSlot) {
+    public void setParkingSlot(ParkingSlot parkingSlot) {
         this.parkingSlot = parkingSlot;
     }
 
@@ -82,4 +84,6 @@ public abstract   class Vehicle {
                 ", teacher= '" + teacher.getName() +
                 '}');
     }
+
+
 }
