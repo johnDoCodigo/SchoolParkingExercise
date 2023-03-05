@@ -2,7 +2,8 @@ package mindswap.schoolParking;
 
 
 import javax.persistence.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -12,9 +13,8 @@ public class ParkingSlot {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicle;
+    @OneToMany(mappedBy = "parkingSlot")
+    private List<Vehicle> vehicles = new ArrayList<>();
 
 
 
@@ -30,21 +30,17 @@ public class ParkingSlot {
         this.id = id;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void parkVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-        vehicle.setParkingSlot(this);
-    }
-
-    public void removeVehicle() {
-        this.vehicle = null;
+    public List<Vehicle> getVehicles() {
+        return vehicles;
     }
 
 
+    public void addVehicle(Vehicle vehicle) {
+        this.vehicles.add(vehicle);
+    }
 }
+
+
 
 
 

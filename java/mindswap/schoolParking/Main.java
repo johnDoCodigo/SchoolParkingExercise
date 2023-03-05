@@ -20,12 +20,13 @@ public class Main {
         Teacher t6 = new Teacher("Machado", 27);
         //createVehicles
 
-        Car car1 = new Car("44-ZZ-99", "BMW",t1);
-        Car car2 = new Car("55-XX-88", "AUDI",t2);
-        Car car3 = new Car("66-YY-77", "MERCEDES",t3);
-        Bike bike1 = new Bike("88-AA-66", "YAMAHAA",t4);
-        Bike bike2 = new Bike("77-BB-55", "HONDA",t5);
-        Bike bike3 = new Bike("99-CC-44", "SUZUKI",t6);
+        Car car1 = new Car("44-ZZ-99", "BMW", t1);
+        Car car2 = new Car("55-XX-88", "AUDI", t2);
+        Car car3 = new Car("66-YY-77", "MERCEDES", t3);
+        Bike bike1 = new Bike("88-AA-66", "YAMAHAA", t4);
+        Bike bike2 = new Bike("77-BB-55", "HONDA", t5);
+        Bike bike3 = new Bike("99-CC-44", "SUZUKI", t6);
+
         //createParkingSlots
 
         ParkingSlot p1 = new ParkingSlot();
@@ -34,6 +35,14 @@ public class Main {
         ParkingSlot p4 = new ParkingSlot();
         ParkingSlot p5 = new ParkingSlot();
         ParkingSlot p6 = new ParkingSlot();
+
+
+        t1.setVehicle(car1);
+        t2.setVehicle(car2);
+        t3.setVehicle(car3);
+        t4.setVehicle(bike1);
+        t5.setVehicle(bike2);
+        t6.setVehicle(bike3);
 
         //addVehicles
 
@@ -59,41 +68,59 @@ public class Main {
         em.persist(p4);
         em.persist(p5);
         em.persist(p6);
+        em.getTransaction().commit();
         //enter on carPark
-        p1.parkVehicle(car1);
-        p2.parkVehicle(car3);
-        p3.parkVehicle(car2);
-        p4.parkVehicle(bike3);
-        p5.parkVehicle(bike2);
-        p6.parkVehicle(bike1);
+        em.getTransaction().begin();
 
+        car3.setParkingSlot(p1);
+        car2.setParkingSlot(p2);
+        car1.setParkingSlot(p3);
+        bike1.setParkingSlot(p4);
+        bike2.setParkingSlot(p5);
+        bike3.setParkingSlot(p6);
 
-
+        p1.addVehicle(car3);
+        p2.addVehicle(car2);
+        p3.addVehicle(car1);
+        p4.addVehicle(bike1);
+        p5.addVehicle(bike2);
+        p6.addVehicle(bike3);
 
         em.getTransaction().commit();
+
+
+         //a. listing all the vehicles
+        em.getTransaction().begin();
+
+        em.createQuery("Select v FROM Vehicle v ", Vehicle.class)
+                .getResultList()
+                .forEach(Vehicle::print);
+
+        em.getTransaction().commit();
+
+        // b. finding the vehicle assigned to a particular spot
+        em.getTransaction().begin();
+
+        em.createQuery("SELECT v FROM Vehicle v " +
+                "WHERE v.parkingSlot = :slot "
+                ,Vehicle.class)
+                    .setParameter("slot",p5)
+                    .getResultList()
+                    .forEach(Vehicle::print);
+
+        em.getTransaction().commit();
+
+        // c. finding the owner of a particular vehicle
+        em.getTransaction().begin();
+        em.createQuery("SELECT t FROM Teacher t, Vehicle v " +
+                        "WHERE v = :car " +
+                        "AND v.teacher = t.id",Teacher.class)
+                .setParameter("car",car3)
+                .getResultList()
+                .forEach(Teacher::print);
+
+        em.getTransaction().commit();
+
+
     }
 }
-
-//        //get vehicles
-//        em.getTransaction().begin();
-//
-//
-//        em.createQuery("Select  FROM  v", Vehicle.class)
-//                .getResultList()
-//                .forEach(Teacher::print);
-//
-//        em.getTransaction().commit();
-
-//        //Update Teachers with ID
-//
-//        em.getTransaction().begin();
-//
-//        Teacher teacherToUpdate = em.find(Teacher.class, 2);
-//
-//        teacherToUpdate.setName("robert");
-//        em.persist(teacherToUpdate);
-//        em.getTransaction().commit();
-//    }
-//
-//        //get all vehicles
-//}

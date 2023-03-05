@@ -2,8 +2,6 @@ package mindswap.schoolParking;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Teacher extends Person {
@@ -37,6 +35,6 @@ public class Teacher extends Person {
                 "id=" + getPersonId() +
                 ", name='" +getName() +
                 ", age='" + getAge() +
-                "', vehicle='" + getVehicle()+"'}");
+                "', vehicle='" + getVehicle().getBrand()+"'}");
     }
 }
