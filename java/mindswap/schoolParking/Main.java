@@ -60,6 +60,7 @@ public class Main {
         em.persist(p5);
         em.persist(p6);
         //enter on carPark
+
         p1.parkVehicle(car1);
         p2.parkVehicle(car3);
         p3.parkVehicle(car2);
@@ -68,9 +69,18 @@ public class Main {
         p6.parkVehicle(bike1);
 
 
+        //empty spot on parking lot
+        p1.removeVehicle(car1);
+        p2.removeVehicle(car3);
+        p3.removeVehicle(car2);
+        p4.removeVehicle(bike3);
+        p5.removeVehicle(bike2);
+        p6.removeVehicle(bike1);
 
 
-        em.getTransaction().commit();
+
+
+       em.getTransaction().commit();
     }
 }
 

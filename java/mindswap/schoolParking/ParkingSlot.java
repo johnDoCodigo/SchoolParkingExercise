@@ -2,7 +2,6 @@ package mindswap.schoolParking;
 
 
 import javax.persistence.*;
-import java.util.LinkedList;
 
 
 @Entity
@@ -39,10 +38,10 @@ public class ParkingSlot {
         vehicle.setParkingSlot(this);
     }
 
-    public void removeVehicle() {
-        this.vehicle = null;
+    public void removeVehicle(Vehicle vehicle) {
+        this.removeVehicle(vehicle);
+        vehicle.removeParkingSlot(this);
     }
-
 
 }
 

@@ -23,6 +23,14 @@ public abstract   class Vehicle {
     @JoinColumn(name = "parkingSlot_id")
     private ParkingSlot parkingSlot;
 
+    /*Colum for empty spots;
+    @OneToOne(mappedBy = "vehicle")
+    @JoinColumn(name = "parkingSlot_id")
+    private ParkingSlot emptyParkingSlot;
+
+     */
+
+
     public Vehicle() {
 
     }
@@ -75,6 +83,10 @@ public abstract   class Vehicle {
         this.parkingSlot = parkingSlot;
     }
 
+    public void removeParkingSlot (ParkingSlot emptyParkingSlot){
+        this.parkingSlot = emptyParkingSlot;
+    }
+
     public void print() {
         System.out.println("Vehicle{" +
                 "id=" + id +
@@ -84,6 +96,4 @@ public abstract   class Vehicle {
                 ", teacher= '" + teacher.getName() +
                 '}');
     }
-
-
 }
