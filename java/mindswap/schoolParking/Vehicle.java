@@ -4,8 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="vehicles")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract   class Vehicle {
+public abstract class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -16,11 +15,9 @@ public abstract   class Vehicle {
 
 
     @OneToOne
-    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @OneToOne(mappedBy = "vehicle")
-    @JoinColumn(name = "parkingSlot_id")
+    @ManyToOne
     private ParkingSlot parkingSlot;
 
     /*Colum for empty spots;
@@ -81,6 +78,7 @@ public abstract   class Vehicle {
 
     public void setParkingSlot(ParkingSlot parkingSlot) {
         this.parkingSlot = parkingSlot;
+
     }
 
     public void removeParkingSlot (ParkingSlot emptyParkingSlot){
@@ -92,7 +90,7 @@ public abstract   class Vehicle {
                 "id=" + id +
                 ", licensePlate='" + licensePlate  + '\'' +
                 ", brand= '" + brand + '\''+
-                ", parkingSlot= '" + parkingSlot + '\'' +
+                ", parkingSlot= '" + parkingSlot.getId() + '\'' +
                 ", teacher= '" + teacher.getName() +
                 '}');
     }
